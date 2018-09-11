@@ -5,7 +5,7 @@ using System;
 
 namespace CdM_Aquarium
 {
-    class FormeAnimee
+    abstract class FormeAnimee
     {
         #region
         // Déclaration des variables
@@ -84,16 +84,62 @@ namespace CdM_Aquarium
         }
 
         public FormeAnimee(Point pDebut, Point pFin)
-            : this(pDebut, pFin, 50, 500)
+            : this(pDebut, pFin, 50, 1000)
+        {
+        }
+
+        public FormeAnimee() : this(new Point(100, 100), new Point(500, 100))
         {
         }
 
         #endregion
+
+        public void InverserDirection()
+        {
+            Point temp;
+            temp = this.debut;
+            this.debut = this.fin;
+            this.fin = temp;
+            chrono.Restart();
+        }
+
         /// <summary>
         /// Méthodes Dessiner en abstraite
         /// </summary>
-        public abstract void Dessiner(object sender, PaintEventArgs e);
+        abstract public void Paint(object sender, PaintEventArgs e);
+        /*{
+            e.Graphics.DrawRectangle(Pens.Blue, new Rectangle(Position, new Size(largeur, largeur)));
+        }*/
 
         #endregion
     }
+
+    class Carre : FormeAnimee
+    {
+        public Carre():base()
+        {
+        }
+
+        public override void Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(Pens.Blue, new Rectangle(Position, new Size(largeur, largeur)));
+        }
+    }
+
+    class Poisson : FormeAnimee
+    {
+        public Poisson() : base()
+        {
+
+        }
+
+        public override void Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), new RectangleF(Position, new SizeF(120, 60)));
+           
+        }
+
+
+    }
+
 }
