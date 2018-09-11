@@ -9,11 +9,16 @@ namespace CdM_Aquarium
     {
         #region
         // Déclaration des variables
+        // Variable de type Point, contient une position X et une position Y
         protected Point debut;
         protected Point fin;
+        // Variable de type Entier, contient un chiffre positif ou négatif sans virgule
         protected int largeur;
+        // Variable de type Double, contient un chiffre positif ou négatif avec virgule
         protected double duree;
+        // Variable de type "Chronomètre", permet d'effectuer des mesures de temps
         protected Stopwatch chrono;
+        // Variable de type "Aléatoire" retourne un chiffre aléatoire dans une plage donnée
         protected Random rnd;
         #endregion
 
