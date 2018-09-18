@@ -20,8 +20,6 @@ namespace CdM_Aquarium
         private double _duree;
         // Variable de type "Chronomètre", permet d'effectuer des mesures de temps
         private Stopwatch _chrono;
-        // Variable de type "Aléatoire" retourne un chiffre aléatoire dans une plage donnée
-        private Random _rnd;
 
         private RectangleF _boiteDeCollision;
 
@@ -35,7 +33,6 @@ namespace CdM_Aquarium
         public double Hauteur { get => _hauteur; set => _hauteur = value; }
         public double Duree { get => _duree; set => _duree = value; }
         public Stopwatch Chrono { get => _chrono; set => _chrono = value; }
-        public Random Rnd { get => _rnd; set => _rnd = value; }
         public RectangleF BoiteDeCollision { get => _boiteDeCollision; set => _boiteDeCollision = value; }
 
         /// <summary>
@@ -91,7 +88,6 @@ namespace CdM_Aquarium
             this.Duree = vitesse;
 
             this.Chrono = new Stopwatch();
-            this.Rnd = new Random();
             this.Chrono.Start();
 
         }
@@ -125,10 +121,6 @@ namespace CdM_Aquarium
         /// Méthodes Dessiner en abstraite
         /// </summary>
         abstract public void Paint(object sender, PaintEventArgs e);
-        /*{
-            e.Graphics.DrawRectangle(Pens.Blue, new Rectangle(Position, new Size(largeur, largeur)));
-        }*/
-
         #endregion
     }
 
@@ -144,6 +136,6 @@ namespace CdM_Aquarium
         }
     }
 
-    
+
 
 }

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aquarium.cs" />
     <Compile Include="Bulle.cs" />
     <Compile Include="FormeAnimee.cs" />
     <Compile Include="FrmPrincipale.cs">
