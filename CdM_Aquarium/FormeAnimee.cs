@@ -10,12 +10,12 @@ namespace CdM_Aquarium
         #region
         // Déclaration des variables
         // Variable de type Point, contient une position X et une position Y
-        private Point _debut;
-        private Point _fin;
+        private PointF _debut;
+        private PointF _fin;
         // Variable de type Entier, contient un chiffre positif sans virgule
-        private int _largeur;
+        private double _largeur;
         // Variable de type Entier, contient un chiffre positif sans virgule
-        private int _hauteur;
+        private double _hauteur;
         // Variable de type Double, contient un chiffre positif avec virgule
         private double _duree;
         // Variable de type "Chronomètre", permet d'effectuer des mesures de temps
@@ -23,26 +23,26 @@ namespace CdM_Aquarium
         // Variable de type "Aléatoire" retourne un chiffre aléatoire dans une plage donnée
         private Random _rnd;
 
-        private Rectangle _boiteDeCollision;
+        private RectangleF _boiteDeCollision;
 
         #endregion
 
         #region Propriétés
 
-        public Point Debut { get => _debut; set => _debut = value; }
-        public Point Fin { get => _fin; set => _fin = value; }
-        public int Largeur { get => _largeur; set => _largeur = value; }
-        public int Hauteur { get => _hauteur; set => _hauteur = value; }
+        public PointF Debut { get => _debut; set => _debut = value; }
+        public PointF Fin { get => _fin; set => _fin = value; }
+        public double Largeur { get => _largeur; set => _largeur = value; }
+        public double Hauteur { get => _hauteur; set => _hauteur = value; }
         public double Duree { get => _duree; set => _duree = value; }
         public Stopwatch Chrono { get => _chrono; set => _chrono = value; }
         public Random Rnd { get => _rnd; set => _rnd = value; }
-        public Rectangle BoiteDeCollision { get => _boiteDeCollision; set => _boiteDeCollision = value; }
+        public RectangleF BoiteDeCollision { get => _boiteDeCollision; set => _boiteDeCollision = value; }
 
         /// <summary>
         /// Calcule la position en fonction du temps écoulé depuis la création de l'objet
         /// Retourne la position au moment du calcul
         /// </summary>
-        public Point Position
+        public PointF Position
         {
             get
             {
@@ -82,10 +82,10 @@ namespace CdM_Aquarium
         /// <param name="yE">Y Fin </param>
         /// <param name="largeur">Taille de la forme </param>
         /// <param name="vitesse">Vitesse </param>
-        public FormeAnimee(int x0, int y0, int xE, int yE, int largeur, int hauteur, double vitesse)
+        public FormeAnimee(double x0, double y0, double xE, double yE, double largeur, double hauteur, double vitesse)
         {
-            this.Debut = new Point(x0, y0);
-            this.Fin = new Point(xE, yE);
+            this.Debut = new PointF((float)x0, (float)y0);
+            this.Fin = new PointF((float)xE, (float)yE);
             this.Largeur = largeur;
             this.Hauteur = hauteur;
             this.Duree = vitesse;
@@ -96,17 +96,17 @@ namespace CdM_Aquarium
 
         }
 
-        public FormeAnimee(Point pDebut, Point pFin, int largeur, int hauteur, double vitesse)
+        public FormeAnimee(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse)
             : this(pDebut.X, pDebut.Y, pFin.X, pFin.Y, largeur, hauteur, vitesse)
         {
         }
 
-        public FormeAnimee(Point pDebut, Point pFin)
+        public FormeAnimee(PointF pDebut, PointF pFin)
             : this(pDebut, pFin, 50, 50, 1000)
         {
         }
 
-        public FormeAnimee() : this(new Point(100, 100), new Point(500, 100))
+        public FormeAnimee() : this(new PointF(100, 100), new PointF(500, 100))
         {
         }
 
@@ -114,7 +114,7 @@ namespace CdM_Aquarium
 
         public void InverserDirection()
         {
-            Point temp;
+            PointF temp;
             temp = this.Debut;
             this.Debut = this.Fin;
             this.Fin = temp;
@@ -140,7 +140,7 @@ namespace CdM_Aquarium
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(Pens.Blue, new Rectangle(Position, new Size(this.Largeur, this.Hauteur)));
+            e.Graphics.DrawRectangle(Pens.Blue, Position.X, Position.Y, (float)this.Largeur, (float)this.Hauteur);
         }
     }
 
