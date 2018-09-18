@@ -10,19 +10,34 @@ namespace CdM_Aquarium
         #region
         // Déclaration des variables
         // Variable de type Point, contient une position X et une position Y
-        protected Point debut;
-        protected Point fin;
-        // Variable de type Entier, contient un chiffre positif ou négatif sans virgule
-        protected int largeur;
-        // Variable de type Double, contient un chiffre positif ou négatif avec virgule
-        protected double duree;
+        private Point _debut;
+        private Point _fin;
+        // Variable de type Entier, contient un chiffre positif sans virgule
+        private int _largeur;
+        // Variable de type Entier, contient un chiffre positif sans virgule
+        private int _hauteur;
+        // Variable de type Double, contient un chiffre positif avec virgule
+        private double _duree;
         // Variable de type "Chronomètre", permet d'effectuer des mesures de temps
-        protected Stopwatch chrono;
+        private Stopwatch _chrono;
         // Variable de type "Aléatoire" retourne un chiffre aléatoire dans une plage donnée
-        protected Random rnd;
+        private Random _rnd;
+
+        private Rectangle _boiteDeCollision;
+
         #endregion
 
         #region Propriétés
+
+        public Point Debut { get => _debut; set => _debut = value; }
+        public Point Fin { get => _fin; set => _fin = value; }
+        public int Largeur { get => _largeur; set => _largeur = value; }
+        public int Hauteur { get => _hauteur; set => _hauteur = value; }
+        public double Duree { get => _duree; set => _duree = value; }
+        public Stopwatch Chrono { get => _chrono; set => _chrono = value; }
+        public Random Rnd { get => _rnd; set => _rnd = value; }
+        public Rectangle BoiteDeCollision { get => _boiteDeCollision; set => _boiteDeCollision = value; }
+
         /// <summary>
         /// Calcule la position en fonction du temps écoulé depuis la création de l'objet
         /// Retourne la position au moment du calcul
@@ -31,13 +46,13 @@ namespace CdM_Aquarium
         {
             get
             {
-                double Y = debut.Y + (double)(fin.Y - debut.Y) * (double)(chrono.ElapsedMilliseconds / duree);
-                double X = debut.X + (double)(fin.X - debut.X) * (double)(chrono.ElapsedMilliseconds / duree);
+                double Y = Debut.Y + (double)(Fin.Y - Debut.Y) * (double)(Chrono.ElapsedMilliseconds / Duree);
+                double X = Debut.X + (double)(Fin.X - Debut.X) * (double)(Chrono.ElapsedMilliseconds / Duree);
                 if (estArrive)
                 {
-                    chrono.Stop();
-                    Y = fin.Y;
-                    X = fin.X;
+                    Chrono.Stop();
+                    Y = Fin.Y;
+                    X = Fin.X;
                 }
                 return new Point((int)X, (int)Y);
             }
@@ -50,9 +65,10 @@ namespace CdM_Aquarium
         {
             get
             {
-                return chrono.ElapsedMilliseconds >= duree;
+                return Chrono.ElapsedMilliseconds >= Duree;
             }
         }
+
         #endregion
 
         #region Méthodes
@@ -66,25 +82,27 @@ namespace CdM_Aquarium
         /// <param name="yE">Y Fin </param>
         /// <param name="largeur">Taille de la forme </param>
         /// <param name="vitesse">Vitesse </param>
-        public FormeAnimee(int x0, int y0, int xE, int yE, int largeur, double vitesse)
+        public FormeAnimee(int x0, int y0, int xE, int yE, int largeur, int hauteur, double vitesse)
         {
-            debut = new Point(x0, y0);
-            this.largeur = largeur;
-            duree = vitesse;
-            fin = new Point(xE, yE);
-            chrono = new Stopwatch();
-            rnd = new Random();
-            chrono.Start();
+            this.Debut = new Point(x0, y0);
+            this.Fin = new Point(xE, yE);
+            this.Largeur = largeur;
+            this.Hauteur = hauteur;
+            this.Duree = vitesse;
+
+            this.Chrono = new Stopwatch();
+            this.Rnd = new Random();
+            this.Chrono.Start();
 
         }
 
-        public FormeAnimee(Point pDebut, Point pFin, int largeur, double vitesse)
-            : this(pDebut.X, pDebut.Y, pFin.X, pFin.Y, largeur, vitesse)
+        public FormeAnimee(Point pDebut, Point pFin, int largeur, int hauteur, double vitesse)
+            : this(pDebut.X, pDebut.Y, pFin.X, pFin.Y, largeur, hauteur, vitesse)
         {
         }
 
         public FormeAnimee(Point pDebut, Point pFin)
-            : this(pDebut, pFin, 50, 1000)
+            : this(pDebut, pFin, 50, 50, 1000)
         {
         }
 
@@ -97,10 +115,10 @@ namespace CdM_Aquarium
         public void InverserDirection()
         {
             Point temp;
-            temp = this.debut;
-            this.debut = this.fin;
-            this.fin = temp;
-            chrono.Restart();
+            temp = this.Debut;
+            this.Debut = this.Fin;
+            this.Fin = temp;
+            this.Chrono.Restart();
         }
 
         /// <summary>
@@ -116,13 +134,13 @@ namespace CdM_Aquarium
 
     class Carre : FormeAnimee
     {
-        public Carre():base()
+        public Carre() : base()
         {
         }
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(Pens.Blue, new Rectangle(Position, new Size(largeur, largeur)));
+            e.Graphics.DrawRectangle(Pens.Blue, new Rectangle(Position, new Size(this.Largeur, this.Hauteur)));
         }
     }
 
@@ -136,10 +154,7 @@ namespace CdM_Aquarium
         public override void Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), new RectangleF(Position, new SizeF(120, 60)));
-           
         }
-
-
     }
 
 }

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bulle.cs" />
     <Compile Include="FormeAnimee.cs" />
     <Compile Include="FrmPrincipale.cs">
       <SubType>Form</SubType>

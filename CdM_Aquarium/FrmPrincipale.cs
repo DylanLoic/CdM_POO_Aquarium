@@ -28,11 +28,12 @@ namespace CdM_Aquarium
             t.Tick += T_Tick;
             t.Start();
             InitializeComponent();
-            //listeFormes.Add(new FormeAnimee(new Point(0, 0), new Point(100, 100)));
             listeFormes.Add(new Carre());    // Ajout d'objets dans la liste
-            listeFormes.Add(new Poisson());  // ^^ 
+            listeFormes.Add(new Poisson());  // ""
             listeFormes.ForEach(p => this.Paint += p.Paint);
+                
         }
+        
 
         private void T_Tick(object sender, EventArgs e)
         {
