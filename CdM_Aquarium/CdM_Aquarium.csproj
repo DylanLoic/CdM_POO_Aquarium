@@ -54,6 +54,7 @@
     <Compile Include="FrmPrincipale.Designer.cs">
       <DependentUpon>FrmPrincipale.cs</DependentUpon>
     </Compile>
+    <Compile Include="Poisson.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmPrincipale.resx">

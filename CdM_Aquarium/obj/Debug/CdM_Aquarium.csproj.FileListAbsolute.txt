@@ -8,3 +8,13 @@ C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\bin\Debug\CdM_Aqu
 C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\bin\Debug\CdM_Aquarium.pdb
 C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.exe
 C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.pdb
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\bin\Debug\CdM_Aquarium.exe.config
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\bin\Debug\CdM_Aquarium.exe
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\bin\Debug\CdM_Aquarium.pdb
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csprojAssemblyReference.cache
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.frmPrincipale.resources
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.Properties.Resources.resources
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csproj.GenerateResource.cache
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csproj.CoreCompileInputs.cache
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.exe
+C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.pdb
