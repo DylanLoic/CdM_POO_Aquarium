@@ -21,5 +21,16 @@ namespace CdM_Aquarium
             e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), new RectangleF(Position, new SizeF(120, 60)));
         }
 
+        //DrawFromImage
+        private void DessinerPoissonDepuisImage(object sender, PaintEventArgs e)
+        {
+        }
+
+        //DrawFromFunction
+        private void DessinerPoissonDepuisFonction(object sender, PaintEventArgs e)
+        {
+            //e.Graphics.DrawLine
+        }
+
     }
 }
