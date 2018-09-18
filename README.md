@@ -3,7 +3,7 @@
 ## Contexte 
 
 Ce programme est destiné à la présentation de la programmation orientée objet lors de la Cité des Métiers à Palexpo pour 2018.
-Il s'agit d'un programme réalisé par l'Ecole d'Informatique de Genève (CFPT Informatique), à Onex.
+Il s'agit d'un programme réalisé par l'Ecole d'Informatique de Genève (CFPT Informatique), du Petit-Lancy.
 Ce programme est libre d'utilisation.
 
 ## Notes
