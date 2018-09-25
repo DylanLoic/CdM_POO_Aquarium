@@ -12,6 +12,7 @@ namespace CdM_Aquarium
 {
     public partial class frmPrincipale : Form
     {
+        PaintEventArgs e;
         public frmPrincipale()
         {
             DoubleBuffered = true;
