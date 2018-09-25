@@ -10,18 +10,24 @@ namespace CdM_Aquarium
 {
     class Bulle : FormeAnimee
     {
-        private const double RATIO_GRANDISSEMENT = 1.02;
-        private const double RATIO_ACCELERATION = 0.85;
+
+        private Color _color;
+        
+        public Color Color { get => _color; set => _color = value; }
 
         public Bulle(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse)
             : base(pDebut, pFin, largeur, hauteur, vitesse)
         {
-
+            
         }
         public Bulle(PointF pDebut, PointF pFin) 
             : base(pDebut, pFin)
         {
+        }
 
+        public Bulle()
+            :this(new PointF(100,0), new PointF(100,100))
+        {
         }
 
         public Bulle Fusionner(Bulle b)
@@ -35,10 +41,14 @@ namespace CdM_Aquarium
 
             return new Bulle(this.Position, this.Fin, rayonResultant, rayonResultant, this.Duree);
         }
+        
+        
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.BoiteDeCollision);
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            e.Graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
+            e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
         }
     }
 }

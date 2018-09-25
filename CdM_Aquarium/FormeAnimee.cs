@@ -33,7 +33,7 @@ namespace CdM_Aquarium
         public double Hauteur { get => _hauteur; set => _hauteur = value; }
         public double Duree { get => _duree; set => _duree = value; }
         public Stopwatch Chrono { get => _chrono; set => _chrono = value; }
-        public RectangleF BoiteDeCollision { get => _boiteDeCollision; set => _boiteDeCollision = value; }
+        public RectangleF BoiteDeCollision { get => new RectangleF(this.Debut, new SizeF((float)this.Largeur, (float)this.Hauteur)); set => _boiteDeCollision = value; }
 
         /// <summary>
         /// Calcule la position en fonction du temps écoulé depuis la création de l'objet
@@ -86,7 +86,7 @@ namespace CdM_Aquarium
             this.Largeur = largeur;
             this.Hauteur = hauteur;
             this.Duree = vitesse;
-
+            this.BoiteDeCollision = new RectangleF(this.Debut, new SizeF((float)this.Largeur, (float)this.Hauteur));
             this.Chrono = new Stopwatch();
             this.Chrono.Start();
 
@@ -132,7 +132,7 @@ namespace CdM_Aquarium
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(Pens.Blue, Position.X, Position.Y, (float)this.Largeur, (float)this.Hauteur);
+            e.Graphics.DrawRectangle(Pens.Blue, Position.X, Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,9 @@ namespace CdM_Aquarium
         private Timer _minuterie;
         private List<Bulle> _bulles;
         private Random _rnd;
-
         private int _hauteurAquarium;
         private int _largeurAquarium;
+        private List<Bulle> bullesASupprimer;
 
 
         #endregion
@@ -35,6 +36,7 @@ namespace CdM_Aquarium
         public Aquarium(Form vue)
         {
             this.Vue = vue;
+
             this.Minuterie = new Timer();
             this.Minuterie.Interval = 10;
             this.Minuterie.Start();
@@ -44,11 +46,24 @@ namespace CdM_Aquarium
             this.LargeurAquarium = this.Vue.Width;
             this.Rnd = new Random();
             Bulles = new List<Bulle>();
+            bullesASupprimer = new List<Bulle>();
         }
 
         private void Minuterie_Tick(object sender, EventArgs e)
         {
             this.Vue.Invalidate();
+            bool temp = false;
+            foreach (Bulle b in Bulles)
+            {
+                if (DetecteCollision(b))
+                {
+                    b.Color = Color.Blue;
+                    temp = true;
+                }
+            }
+            if (temp)
+                FusionBulle();
+
             foreach (var objet in Bulles)
             {
                 if (objet.estArrive)
@@ -58,54 +73,48 @@ namespace CdM_Aquarium
 
         private void Vue_MouseClick(object sender, MouseEventArgs e)
         {
-            Bulle maBulle = new Bulle(e.Location, new System.Drawing.PointF(800, 800));
-            this.Vue.Paint += maBulle.Paint;
-            MessageBox.Show(maBulle.Hauteur.ToString());
-
+            Bulle maBulle = new Bulle(e.Location, new System.Drawing.PointF(0, 0));
             Bulles.Add(maBulle);
+            this.Vue.Paint += maBulle.Paint;
         }
         #endregion
 
         #region Bulles 
-        private void GenerationBulles(int nb)
+
+        public bool DetecteCollision(Bulle bulle1)
         {
-
-        }
-
-
-        public void ParcourirBulles()
-        {
-            for (int i = 0; i < Bulles.Count; i++)
-            {
-                for (int j = i + 1; j < Bulles.Count; j++)
+            bool collision = false;
+            foreach (Bulle bulle2 in Bulles)
+                if ((bulle1 != bulle2) &&
+                    (bulle2.BoiteDeCollision.IntersectsWith(bulle1.BoiteDeCollision)))
                 {
-                    if (VerifieCollision(Bulles[i], Bulles[j]))
-                    {
-                        FusionBulle(Bulles[i], Bulles[j]);
-                        return;
-                    }
+                    bullesASupprimer.Add(bulle1);
+                    bullesASupprimer.Add(bulle2);
+                    collision = true;
+                    break;
                 }
-            }
+            return collision;
         }
 
-        private void FusionBulle(Bulle b1, Bulle b2)
+        private void FusionBulle(/*Bulle b1, Bulle b2*/)
         {
-            Bulle nouvelleBulle = b1.Fusionner(b2);
-            this.Vue.Paint -= b1.Paint;
-            this.Vue.Paint -= b2.Paint;
-            Bulles.Remove(b1);
-            Bulles.Remove(b2);
-            this.Vue.Paint += nouvelleBulle.Paint;
+            //Bulle nouvelleBulle = b1.Fusionner(b2);
+            //this.Vue.Paint -= b1.Paint;
+            //this.Vue.Paint -= b2.Paint;
+            //Bulles.Remove(b1);
+            //Bulles.Remove(b2);
+            //Bulles.Add(nouvelleBulle);
+            //this.Vue.Paint += nouvelleBulle.Paint;
 
-        }
 
-        private bool VerifieCollision(Bulle b1, Bulle b2)
-        {
-            return b1.BoiteDeCollision.IntersectsWith(b2.BoiteDeCollision);
+            Bulle bulleAAjouter = bullesASupprimer[0].Fusionner(bullesASupprimer[1]);
+            bullesASupprimer.ForEach(p => this.Vue.Paint -= p.Paint);
+            bullesASupprimer.ForEach(p => Bulles.Remove(p));
+            bullesASupprimer.Clear();
+            Bulles.Add(bulleAAjouter);
+            this.Vue.Paint += bulleAAjouter.Paint;
         }
         #endregion
-
         #endregion
-
     }
 }
