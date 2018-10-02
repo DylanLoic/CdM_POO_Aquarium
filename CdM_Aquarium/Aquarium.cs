@@ -17,13 +17,20 @@ namespace CdM_Aquarium
         private Random _rnd;
         private int _hauteurAquarium;
         private int _largeurAquarium;
+<<<<<<< HEAD
         private List<Bulle> bullesASupprimer;
         private List<FormeAnimee> _formesAnimees;
 
 
+=======
+        private List<Bulle> _bullesASupprimer;
+>>>>>>> 6862878a7c107a7cb02f9325a8cb3c429dbd3ce6
         #endregion
 
         #region Propriétés
+        /// <summary>
+        /// Liste des bulles de l'aquarium
+        /// </summary>
         private List<Bulle> Bulles { get => _bulles; set => _bulles = value; }
         private List<FormeAnimee> FormesAnimees { get => _formesAnimees; set => _formesAnimees = value; }
         public int HauteurAquarium { get => _hauteurAquarium; set => _hauteurAquarium = value; }
@@ -31,19 +38,33 @@ namespace CdM_Aquarium
         public Form Vue { get => _vue; set => _vue = value; }
         public Timer Minuterie { get => _minuterie; set => _minuterie = value; }
         public Random Rnd { get => _rnd; set => _rnd = value; }
+
+        /// <summary>
+        /// Liste stockant les bulles à supprimer
+        /// </summary>
+        public List<Bulle> BullesASupprimer { get => _bullesASupprimer; set => _bullesASupprimer = value; }
         #endregion
 
         #region Méthodes
+
         #region Consctructeur
         public Aquarium(Form vue)
         {
+            // Récupération de la vue (FrmPrincipale)
             this.Vue = vue;
 
+            // Initialisation du minuteur (timer)
             this.Minuterie = new Timer();
             this.Minuterie.Interval = 10;
             this.Minuterie.Start();
+
+            // Chainer de l'évènement de la minuterie (timer)
             this.Minuterie.Tick += Minuterie_Tick;
+
+            // Chainer l'évènement du click sur la vue
             this.Vue.MouseClick += Vue_MouseClick;
+
+            // Initialisation des variables de classe
             this.HauteurAquarium = this.Vue.Height;
             this.LargeurAquarium = this.Vue.Width;
             this.Rnd = new Random();
@@ -51,26 +72,24 @@ namespace CdM_Aquarium
             bullesASupprimer = new List<Bulle>();
             FormesAnimees = new List<FormeAnimee>();
         }
+        #endregion
 
         private void Minuterie_Tick(object sender, EventArgs e)
         {
             this.Vue.Invalidate();
-            bool temp = false;
-            foreach (FormeAnimee f in FormesAnimees)
-            {
-                if (f is Bulle)
-                {
-                    if (DetecteCollision((Bulle)f))
-                    {
-                        ((Bulle)f).Color = Color.Blue;
-                        temp = true;
-                    }
-                }
-            }
-            if (temp)
-                FusionBulle();
+            bool collision = false;
 
-            foreach (var objet in Bulles)
+            Bulles.ForEach(b =>
+            {
+                collision = DetecteCollision(b);
+                if (collision)
+                    return;
+            });
+
+            if (collision)
+                FusionBulle();
+ 
+            Bulles.ForEach(b =>
             {
                 if (objet.estArrive)
                     objet.InverserDirection();
@@ -97,45 +116,48 @@ namespace CdM_Aquarium
             Poisson monPoisson = new Poisson(e.Location, new PointF(50,50));
             FormesAnimees.Add(monPoisson);
             this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
+            
+            Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
+            this.Bulles.Add(maBulle);
+            this.Vue.Paint += maBulle.Paint;
         }
-        #endregion
 
         #region Bulles 
-
         public bool DetecteCollision(Bulle bulle1)
         {
             bool collision = false;
-            foreach (Bulle bulle2 in Bulles)
+
+            this.Bulles.ForEach(bulle2 =>
+            {
                 if ((bulle1 != bulle2) &&
-                    (bulle2.BoiteDeCollision.IntersectsWith(bulle1.BoiteDeCollision)))
+                (bulle2.BoiteDeCollision.IntersectsWith(bulle1.BoiteDeCollision)))
                 {
-                    bullesASupprimer.Add(bulle1);
-                    bullesASupprimer.Add(bulle2);
+                    this.BullesASupprimer.Add(bulle1);
+                    this.BullesASupprimer.Add(bulle2);
                     collision = true;
-                    break;
+                    return;
                 }
+            });
             return collision;
         }
 
-        private void FusionBulle(/*Bulle b1, Bulle b2*/)
+        private void FusionBulle()
         {
-            //Bulle nouvelleBulle = b1.Fusionner(b2);
-            //this.Vue.Paint -= b1.Paint;
-            //this.Vue.Paint -= b2.Paint;
-            //Bulles.Remove(b1);
-            //Bulles.Remove(b2);
-            //Bulles.Add(nouvelleBulle);
-            //this.Vue.Paint += nouvelleBulle.Paint;
+            Bulle bulleAAjouter = this.BullesASupprimer[0].Fusionner(BullesASupprimer[1]);
 
+            // Retire du Paint de la vue les bulles qui vont être supprimées
+            this.BullesASupprimer.ForEach(p => this.Vue.Paint -= p.Paint);
+            // Supprime les bulles de la liste principale
+            this.BullesASupprimer.ForEach(p => Bulles.Remove(p));
+            this.BullesASupprimer.Clear();
 
-            Bulle bulleAAjouter = bullesASupprimer[0].Fusionner(bullesASupprimer[1]);
-            bullesASupprimer.ForEach(p => this.Vue.Paint -= p.Paint);
-            bullesASupprimer.ForEach(p => Bulles.Remove(p));
-            bullesASupprimer.Clear();
-            Bulles.Add(bulleAAjouter);
+            // Ajoute à la liste la nouvelle bulle créée de la fusion
+            this.Bulles.Add(bulleAAjouter);
+            // Ajout au Paint de la vue la nouvelle bulle
             this.Vue.Paint += bulleAAjouter.Paint;
         }
         #endregion
+
         #endregion
     }
 }
