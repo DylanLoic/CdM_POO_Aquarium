@@ -10,3 +10,10 @@ Ce programme est libre d'utilisation.
 
 Pour des raisons de compréhension du code, les variables, commentaires et fichiers sont en français. 
 Nous recommandons toutefois l'utilisation de l'anglais en tout temps (dans le cadre de la programmation).
+
+## Auteurs
+
+- Dylan SCHITO
+- Robin BRUNAZZI
+- Kilian PERISSET
+
