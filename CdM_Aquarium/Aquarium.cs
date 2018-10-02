@@ -1,9 +1,14 @@
-﻿using System;
+﻿/*
+ * Auteur : Dylan Schito, Kilian Perisset, Robin Brunazzi
+ * Date : 02.10.2018
+ * Projet : Cité des métiers
+ * Description :
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CdM_Aquarium
@@ -13,18 +18,16 @@ namespace CdM_Aquarium
         #region Champs
         private Form _vue;
         private Timer _minuterie;
-        private List<Bulle> _bulles;
+        private Timer _rafraichir;
         private Random _rnd;
         private int _hauteurAquarium;
         private int _largeurAquarium;
-<<<<<<< HEAD
-        private List<Bulle> bullesASupprimer;
-        private List<FormeAnimee> _formesAnimees;
 
-
-=======
+        private List<Bulle> _bulles;
         private List<Bulle> _bullesASupprimer;
->>>>>>> 6862878a7c107a7cb02f9325a8cb3c429dbd3ce6
+        private List<Bulle> _bullesAGonfler;
+
+        private List<FormeAnimee> _formesAnimees;
         #endregion
 
         #region Propriétés
@@ -43,6 +46,8 @@ namespace CdM_Aquarium
         /// Liste stockant les bulles à supprimer
         /// </summary>
         public List<Bulle> BullesASupprimer { get => _bullesASupprimer; set => _bullesASupprimer = value; }
+        internal List<Bulle> BullesAGonfler { get => _bullesAGonfler; set => _bullesAGonfler = value; }
+        public Timer Rafraichir { get => _rafraichir; set => _rafraichir = value; }
         #endregion
 
         #region Méthodes
@@ -53,13 +58,19 @@ namespace CdM_Aquarium
             // Récupération de la vue (FrmPrincipale)
             this.Vue = vue;
 
+            // Initialisation du rafraichissement (timer)
+            this.Rafraichir = new Timer();
+            // Chaine de l'évènement de rafraichissement (timer)
+            this.Rafraichir.Tick += Refresh_Tick;
+            this.Rafraichir.Interval = 40;
+            this.Rafraichir.Start();
+
             // Initialisation du minuteur (timer)
             this.Minuterie = new Timer();
-            this.Minuterie.Interval = 10;
-            this.Minuterie.Start();
-
-            // Chainer de l'évènement de la minuterie (timer)
+            // Chaine de l'évènement de la minuterie (timer)
             this.Minuterie.Tick += Minuterie_Tick;
+            this.Minuterie.Interval = 100;
+            this.Minuterie.Start();
 
             // Chainer l'évènement du click sur la vue
             this.Vue.MouseClick += Vue_MouseClick;
@@ -68,32 +79,29 @@ namespace CdM_Aquarium
             this.HauteurAquarium = this.Vue.Height;
             this.LargeurAquarium = this.Vue.Width;
             this.Rnd = new Random();
-            Bulles = new List<Bulle>();
-            bullesASupprimer = new List<Bulle>();
+
+            // Initialisation des listes
+            this.Bulles = new List<Bulle>();
+            this.BullesASupprimer = new List<Bulle>();
+            this.BullesAGonfler = new List<Bulle>();
+
             FormesAnimees = new List<FormeAnimee>();
         }
         #endregion
 
         private void Minuterie_Tick(object sender, EventArgs e)
         {
-            this.Vue.Invalidate();
-            bool collision = false;
-
             Bulles.ForEach(b =>
             {
-                collision = DetecteCollision(b);
-                if (collision)
-                    return;
+                DetecteCollision(b);
             });
+            FusionBulle();
 
-            if (collision)
-                FusionBulle();
- 
             Bulles.ForEach(b =>
             {
-                if (objet.estArrive)
-                    objet.InverserDirection();
-            }
+                if (b.estArrive)
+                    b.InverserDirection();
+            });
 
             foreach (FormeAnimee f in FormesAnimees)
             {
@@ -108,15 +116,18 @@ namespace CdM_Aquarium
 
         }
 
+        private void Refresh_Tick(object sender, EventArgs e)
+        {
+            // Vue..Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            this.Vue.Invalidate();
+        }
+
         private void Vue_MouseClick(object sender, MouseEventArgs e)
         {
-            //Bulle maBulle = new Bulle(e.Location, new System.Drawing.PointF(0, 0));
-            //Bulles.Add(maBulle);
-            //this.Vue.Paint += maBulle.Paint;
-            Poisson monPoisson = new Poisson(e.Location, new PointF(50,50));
-            FormesAnimees.Add(monPoisson);
-            this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
-            
+            //Poisson monPoisson = new Poisson(e.Location, new PointF(50,50));
+            //FormesAnimees.Add(monPoisson);
+            //this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
+
             Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
             this.Bulles.Add(maBulle);
             this.Vue.Paint += maBulle.Paint;
@@ -129,10 +140,11 @@ namespace CdM_Aquarium
 
             this.Bulles.ForEach(bulle2 =>
             {
-                if ((bulle1 != bulle2) &&
-                (bulle2.BoiteDeCollision.IntersectsWith(bulle1.BoiteDeCollision)))
+                if ((bulle1 != bulle2) && (!bulle1.Explose) && (!bulle2.Explose) &&
+                (bulle1.BoiteDeCollision.IntersectsWith(bulle2.BoiteDeCollision)))
                 {
-                    this.BullesASupprimer.Add(bulle1);
+                    this.BullesAGonfler.Add(bulle1);
+                    bulle2.Explose = true;
                     this.BullesASupprimer.Add(bulle2);
                     collision = true;
                     return;
@@ -143,18 +155,17 @@ namespace CdM_Aquarium
 
         private void FusionBulle()
         {
-            Bulle bulleAAjouter = this.BullesASupprimer[0].Fusionner(BullesASupprimer[1]);
-
             // Retire du Paint de la vue les bulles qui vont être supprimées
             this.BullesASupprimer.ForEach(p => this.Vue.Paint -= p.Paint);
+
             // Supprime les bulles de la liste principale
             this.BullesASupprimer.ForEach(p => Bulles.Remove(p));
             this.BullesASupprimer.Clear();
 
-            // Ajoute à la liste la nouvelle bulle créée de la fusion
-            this.Bulles.Add(bulleAAjouter);
-            // Ajout au Paint de la vue la nouvelle bulle
-            this.Vue.Paint += bulleAAjouter.Paint;
+            // Gonfle les bulles de la liste
+            this.BullesAGonfler.ForEach(p => p.Gonfler());
+            this.BullesAGonfler.Clear();
+
         }
         #endregion
 

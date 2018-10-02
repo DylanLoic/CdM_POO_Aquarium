@@ -1,7 +1,7 @@
 ﻿/*
-  * Auteurs : Brunazzi Robin, Périsset Killian, Schito Dylan
+  * Auteurs : Brunazzi Robin
   * Date : 18.09.2018
-  * Projet : 
+  * Projet : Cité des métiers
   * Description : 
   */
 
