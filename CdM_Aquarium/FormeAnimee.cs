@@ -89,7 +89,6 @@ namespace CdM_Aquarium
             this.BoiteDeCollision = new RectangleF(this.Debut, new SizeF((float)this.Largeur, (float)this.Hauteur));
             this.Chrono = new Stopwatch();
             this.Chrono.Start();
-
         }
 
         public FormeAnimee(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse)
