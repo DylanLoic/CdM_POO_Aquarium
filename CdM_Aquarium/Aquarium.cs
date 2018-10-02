@@ -18,12 +18,14 @@ namespace CdM_Aquarium
         private int _hauteurAquarium;
         private int _largeurAquarium;
         private List<Bulle> bullesASupprimer;
+        private List<FormeAnimee> _formesAnimees;
 
 
         #endregion
 
         #region Propriétés
         private List<Bulle> Bulles { get => _bulles; set => _bulles = value; }
+        private List<FormeAnimee> FormesAnimees { get => _formesAnimees; set => _formesAnimees = value; }
         public int HauteurAquarium { get => _hauteurAquarium; set => _hauteurAquarium = value; }
         public int LargeurAquarium { get => _largeurAquarium; set => _largeurAquarium = value; }
         public Form Vue { get => _vue; set => _vue = value; }
@@ -47,18 +49,22 @@ namespace CdM_Aquarium
             this.Rnd = new Random();
             Bulles = new List<Bulle>();
             bullesASupprimer = new List<Bulle>();
+            FormesAnimees = new List<FormeAnimee>();
         }
 
         private void Minuterie_Tick(object sender, EventArgs e)
         {
             this.Vue.Invalidate();
             bool temp = false;
-            foreach (Bulle b in Bulles)
+            foreach (FormeAnimee f in FormesAnimees)
             {
-                if (DetecteCollision(b))
+                if (f is Bulle)
                 {
-                    b.Color = Color.Blue;
-                    temp = true;
+                    if (DetecteCollision((Bulle)f))
+                    {
+                        ((Bulle)f).Color = Color.Blue;
+                        temp = true;
+                    }
                 }
             }
             if (temp)
@@ -69,13 +75,28 @@ namespace CdM_Aquarium
                 if (objet.estArrive)
                     objet.InverserDirection();
             }
+
+            foreach (FormeAnimee f in FormesAnimees)
+            {
+                if (f is Poisson)
+                {
+                    if (f.estArrive)
+                    {
+                        f.InverserDirection();
+                    }
+                }
+            }
+
         }
 
         private void Vue_MouseClick(object sender, MouseEventArgs e)
         {
-            Bulle maBulle = new Bulle(e.Location, new System.Drawing.PointF(0, 0));
-            Bulles.Add(maBulle);
-            this.Vue.Paint += maBulle.Paint;
+            //Bulle maBulle = new Bulle(e.Location, new System.Drawing.PointF(0, 0));
+            //Bulles.Add(maBulle);
+            //this.Vue.Paint += maBulle.Paint;
+            Poisson monPoisson = new Poisson(e.Location, new PointF(50,50));
+            FormesAnimees.Add(monPoisson);
+            this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
         }
         #endregion
 

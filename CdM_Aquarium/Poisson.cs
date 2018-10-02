@@ -1,5 +1,5 @@
 ﻿/*
-  * Auteurs : Brunazzi Robin, Périsset Killian 
+  * Auteurs : Brunazzi Robin, Périsset Killian, Schito Dylan
   * Date : 18.09.2018
   * Projet : 
   * Description : 
@@ -28,7 +28,10 @@ namespace CdM_Aquarium
 
         }
 
+        public Poisson(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse) : base(pDebut, pFin, largeur, hauteur, vitesse)
+        {
 
+        }
 
         public override void Paint(object sender, PaintEventArgs e)
         {
@@ -54,6 +57,7 @@ namespace CdM_Aquarium
         //DrawFromFunction
         public void DessinerPoissonDepuisFonction(object sender, PaintEventArgs e)
         {
+            //Permet un dessin plus "affiné"
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             double t = 0;
