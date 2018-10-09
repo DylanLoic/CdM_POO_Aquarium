@@ -33,7 +33,15 @@ namespace CdM_Aquarium
         public double Hauteur { get => _hauteur; set => _hauteur = value; }
         public double Duree { get => _duree; set => _duree = value; }
         public Stopwatch Chrono { get => _chrono; set => _chrono = value; }
-        public RectangleF BoiteDeCollision { get => new RectangleF(this.Debut, new SizeF((float)this.Largeur, (float)this.Hauteur)); set => _boiteDeCollision = value; }
+        public RectangleF BoiteDeCollision
+        {
+            get
+            {
+                return new RectangleF(this.Position, new SizeF((float)this.Largeur, (float)this.Hauteur));
+            }
+
+            set => _boiteDeCollision = value;
+        }
 
         /// <summary>
         /// Calcule la position en fonction du temps écoulé depuis la création de l'objet
@@ -82,7 +90,7 @@ namespace CdM_Aquarium
         public FormeAnimee(double x0, double y0, double xE, double yE, double largeur, double hauteur, double vitesse)
         {
             this.Debut = new PointF((float)x0, (float)y0);
-            this.Fin = new PointF((float)xE, (float)yE);            
+            this.Fin = new PointF((float)xE, (float)yE);
             this.Largeur = largeur;
             this.Hauteur = hauteur;
             this.Duree = vitesse;

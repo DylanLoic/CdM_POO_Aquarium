@@ -33,6 +33,8 @@ namespace CdM_Aquarium
         private List<Bulle> _bullesAGonfler;
 
         private List<FormeAnimee> _formesAnimees;
+
+        private List<Poisson> _poissons;
         #endregion
 
         #region Propriétés
@@ -41,6 +43,7 @@ namespace CdM_Aquarium
         /// </summary>
         private List<Bulle> Bulles { get => _bulles; set => _bulles = value; }
         private List<FormeAnimee> FormesAnimees { get => _formesAnimees; set => _formesAnimees = value; }
+        private List<Poisson> Poissons { get => _poissons; set => _poissons = value; }
         public int HauteurAquarium { get => _hauteurAquarium; set => _hauteurAquarium = value; }
         public int LargeurAquarium { get => _largeurAquarium; set => _largeurAquarium = value; }
         public Form Vue { get => _vue; set => _vue = value; }
@@ -53,6 +56,7 @@ namespace CdM_Aquarium
         public List<Bulle> BullesASupprimer { get => _bullesASupprimer; set => _bullesASupprimer = value; }
         internal List<Bulle> BullesAGonfler { get => _bullesAGonfler; set => _bullesAGonfler = value; }
         public Timer Rafraichir { get => _rafraichir; set => _rafraichir = value; }
+        
         #endregion
 
         #region Méthodes
@@ -92,7 +96,8 @@ namespace CdM_Aquarium
             this.BullesASupprimer = new List<Bulle>();
             this.BullesAGonfler = new List<Bulle>();
 
-            FormesAnimees = new List<FormeAnimee>();           
+            this.FormesAnimees = new List<FormeAnimee>();
+            this.Poissons = new List<Poisson>();
         }
         #endregion
 
@@ -111,7 +116,16 @@ namespace CdM_Aquarium
                     b.InverserDirection();
             });
 
-            foreach (FormeAnimee f in FormesAnimees)
+            Poissons.ForEach(p =>
+            {
+                if (p.estArrive)
+                {
+                    p.ChangerDeSens();
+                    p.InverserDirection();
+                }
+            });
+
+            /*foreach (FormeAnimee f in FormesAnimees)
             {
                 if (f is Poisson)
                 {
@@ -120,7 +134,7 @@ namespace CdM_Aquarium
                         f.InverserDirection();
                     }
                 }
-            }
+            }*/
 
         }
 
@@ -136,9 +150,12 @@ namespace CdM_Aquarium
             //FormesAnimees.Add(monPoisson);
             //this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
 
-            Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
-            this.Bulles.Add(maBulle);
-            this.Vue.Paint += maBulle.Paint;
+            //Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
+            Poisson monPoisson = new Poisson(e.Location, new PointF(50, e.Location.Y), 50, 50, 2500);
+            //this.Bulles.Add(maBulle);
+            this.Poissons.Add(monPoisson);
+            //this.Vue.Paint += maBulle.Paint;
+            this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
         }
 
         #region Bulles 
