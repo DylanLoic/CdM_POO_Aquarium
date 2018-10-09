@@ -20,6 +20,13 @@ namespace CdM_Aquarium
         #region Propriétés
         public Color Color { get => _color; set => _color = value; }
         public bool Explose { get => _explose; set => _explose = value; }
+        public double AngleDirection
+        {
+            get
+            {
+                return System.Math.Atan2(this.Debut.Y - this.Fin.Y, this.Debut.X - this.Debut.X);
+            }
+        }
         #endregion
 
         #region Constructeurs
@@ -28,25 +35,28 @@ namespace CdM_Aquarium
         {
             this.Explose = false;
         }
-        public Bulle(PointF pDebut, PointF pFin) 
-            : base(pDebut, pFin, 100, 100, 2000)
+        public Bulle(PointF pDebut, PointF pFin)
+            : base(pDebut, pFin, 10, 10, 2000)
         {
         }
 
         public Bulle()
-            :this(new PointF(100,0), new PointF(100,100))
+            : this(new PointF(100, 0), new PointF(100, 100))
         {
         }
         #endregion
 
         #region Méthodes
-        public void Gonfler() {
-            this.Largeur += 10;
-            this.Hauteur += 10;
+
+        public void Gonfler()
+        {
+            this.Largeur += 5;
+            this.Hauteur += 5;
         }
 
         public override void Paint(object sender, PaintEventArgs e)
         {
+
             e.Graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
             e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
         }

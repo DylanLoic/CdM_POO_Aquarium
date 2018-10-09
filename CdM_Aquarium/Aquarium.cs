@@ -15,6 +15,11 @@ namespace CdM_Aquarium
 {
     class Aquarium
     {
+        #region Constantes
+        const int HAUTEUR_AQUARIUM = 600;
+        const int LARGEUR_AQUARIUM = 900;
+        #endregion
+
         #region Champs
         private Form _vue;
         private Timer _minuterie;
@@ -76,8 +81,10 @@ namespace CdM_Aquarium
             this.Vue.MouseClick += Vue_MouseClick;
 
             // Initialisation des variables de classe
-            this.HauteurAquarium = this.Vue.Height;
-            this.LargeurAquarium = this.Vue.Width;
+            this.HauteurAquarium = HAUTEUR_AQUARIUM;
+            this.LargeurAquarium = LARGEUR_AQUARIUM;
+            this.Vue.Height = HAUTEUR_AQUARIUM;
+            this.Vue.Width = LARGEUR_AQUARIUM;
             this.Rnd = new Random();
 
             // Initialisation des listes
@@ -85,9 +92,7 @@ namespace CdM_Aquarium
             this.BullesASupprimer = new List<Bulle>();
             this.BullesAGonfler = new List<Bulle>();
 
-            FormesAnimees = new List<FormeAnimee>();
-
-           
+            FormesAnimees = new List<FormeAnimee>();           
         }
         #endregion
 
