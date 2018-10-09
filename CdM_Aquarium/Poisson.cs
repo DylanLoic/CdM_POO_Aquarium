@@ -17,55 +17,61 @@ namespace CdM_Aquarium
 
     class Poisson : FormeAnimee
     {
-        #region Champs
-        //Taille du poisson à afficher
+        int _sensPoisson;
 
-        #endregion
-
-        #region Propriétés
-        // Alias de hauteur
-        public double Taille { get => this.Hauteur; }
-        #endregion
+        public int SensPoisson { get => _sensPoisson; set => _sensPoisson = value; }
 
         #region Constructeurs
-        public Poisson() :
+        /*public Poisson() :
             base()
         {
-        }
+        }*/
 
         public Poisson(PointF pDebut, PointF pFin) :
             base(pDebut, pFin)
         {
+            if (pDebut.X < pFin.X)
+                this.SensPoisson = 1;
+            else
+                this.SensPoisson = -1;
         }
 
         public Poisson(PointF pDebut, PointF pFin, double pLargeur, double pHauteur, double pVitesse) :
             base(pDebut, pFin, pLargeur, pHauteur, pVitesse)
         {
+            if (pDebut.X < pFin.X)
+                this.SensPoisson = 1;
+            else
+                this.SensPoisson = -1;
         }
         #endregion
 
         #region Méthodes
         public override void Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), new RectangleF(Position, new SizeF(120, 60)));
         }
 
-        //DrawFromImage
+        //Déssine le poisson depuis une image stockée dans les ressources du projet Visual Studio
         private void DessinerPoissonDepuisImage(object sender, PaintEventArgs e)
         {
         }
 
+        //Permet au poisson de se "tourner" vers l'autre direction
+        public void ChangerDeSens()
+        {
+            this.SensPoisson *= -1;
+        }
 
         //Inverser direction avec -x
         public PointF CourbePoisson(double t)
         {
             double x, y;
-            x = (this.Hauteur * Math.Cos(t) - this.Hauteur * Math.Sin(t) * Math.Sin(t) / Math.Sqrt(2));
+            x = (this.Hauteur * Math.Cos(t) - this.Hauteur * Math.Sin(t) * Math.Sin(t) / Math.Sqrt(2))*this.SensPoisson;
             y = (this.Hauteur * Math.Cos(t) * Math.Sin(t));
             return new PointF(Position.X + Convert.ToSingle(x), Position.Y + Convert.ToSingle(y));
         }
 
-        //DrawFromFunction
+        //Déssine le poisson depuis une fonction paramétrique (fonction mathématique) 
         public void DessinerPoissonDepuisFonction(object sender, PaintEventArgs e)
         {
             //Permet un dessin plus "affiné"
@@ -73,9 +79,10 @@ namespace CdM_Aquarium
 
             double t = 0;
             double deltat = 2.0 * Math.PI / 100.0;
+            //"Précision" à 100 lignes 0->99
             for (int i = 0; i < 99; i++)
             {
-                e.Graphics.DrawLine(new Pen(Color.Blue), CourbePoisson(t), CourbePoisson(t + deltat));
+                e.Graphics.DrawLine(new Pen(Color.Red), CourbePoisson(t), CourbePoisson(t + deltat));
                 t = t + deltat;
             }
         }

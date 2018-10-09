@@ -63,6 +63,16 @@ namespace CdM_Aquarium.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap aquarium_background {
+            get {
+                object obj = ResourceManager.GetObject("aquarium_background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap poisson {
             get {
                 object obj = ResourceManager.GetObject("poisson", resourceCulture);

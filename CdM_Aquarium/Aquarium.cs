@@ -6,6 +6,7 @@
  */
 
 
+using CdM_Aquarium.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -25,6 +26,7 @@ namespace CdM_Aquarium
         private Timer _minuterie;
         private Timer _rafraichir;
         private Random _rnd;
+        private Bitmap _monAquarium;
         private int _hauteurAquarium;
         private int _largeurAquarium;
 
@@ -33,6 +35,8 @@ namespace CdM_Aquarium
         private List<Bulle> _bullesAGonfler;
 
         private List<FormeAnimee> _formesAnimees;
+
+        private List<Poisson> _poissons;
         #endregion
 
         #region Propriétés
@@ -41,6 +45,7 @@ namespace CdM_Aquarium
         /// </summary>
         private List<Bulle> Bulles { get => _bulles; set => _bulles = value; }
         private List<FormeAnimee> FormesAnimees { get => _formesAnimees; set => _formesAnimees = value; }
+        private List<Poisson> Poissons { get => _poissons; set => _poissons = value; }
         public int HauteurAquarium { get => _hauteurAquarium; set => _hauteurAquarium = value; }
         public int LargeurAquarium { get => _largeurAquarium; set => _largeurAquarium = value; }
         public Form Vue { get => _vue; set => _vue = value; }
@@ -53,6 +58,7 @@ namespace CdM_Aquarium
         public List<Bulle> BullesASupprimer { get => _bullesASupprimer; set => _bullesASupprimer = value; }
         internal List<Bulle> BullesAGonfler { get => _bullesAGonfler; set => _bullesAGonfler = value; }
         public Timer Rafraichir { get => _rafraichir; set => _rafraichir = value; }
+        
         #endregion
 
         #region Méthodes
@@ -85,6 +91,11 @@ namespace CdM_Aquarium
             this.LargeurAquarium = LARGEUR_AQUARIUM;
             this.Vue.Height = HAUTEUR_AQUARIUM;
             this.Vue.Width = LARGEUR_AQUARIUM;
+            this.Vue.BackgroundImage = Resources.aquarium_background;
+            this.Vue.BackgroundImageLayout = ImageLayout.Stretch;
+
+
+
             this.Rnd = new Random();
 
             // Initialisation des listes
@@ -92,7 +103,12 @@ namespace CdM_Aquarium
             this.BullesASupprimer = new List<Bulle>();
             this.BullesAGonfler = new List<Bulle>();
 
-            FormesAnimees = new List<FormeAnimee>();           
+<<<<<<< HEAD
+            FormesAnimees = new List<FormeAnimee>();
+=======
+            this.FormesAnimees = new List<FormeAnimee>();
+            this.Poissons = new List<Poisson>();
+>>>>>>> 9c474206b58f9e617957751797ea092d15bc5b4e
         }
         #endregion
 
@@ -105,13 +121,34 @@ namespace CdM_Aquarium
             });
             FusionBulle();
 
-            Bulles.ForEach(b =>
+            for (int i = 0; i < 10; i++)
             {
-                if (b.estArrive)
-                    b.InverserDirection();
+                Bulle maBulle = new Bulle(
+              new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
+              new PointF(this.Rnd.Next(0, this.LargeurAquarium), -10));
+                this.Bulles.Add(maBulle);
+                this.Vue.Paint += maBulle.Paint;
+            }
+
+
+            //Bulles.ForEach(b =>
+            //{
+            //    if (b.estArrive)
+            //        b.InverserDirection();
+            //});
+            Bulles.ForEach(b => { if (b.estArrive) { this.Vue.Paint -= b.Paint; } });
+            Bulles.RemoveAll(b => b.estArrive);
+
+            Poissons.ForEach(p =>
+            {
+                if (p.estArrive)
+                {
+                    p.ChangerDeSens();
+                    p.InverserDirection();
+                }
             });
 
-            foreach (FormeAnimee f in FormesAnimees)
+            /*foreach (FormeAnimee f in FormesAnimees)
             {
                 if (f is Poisson)
                 {
@@ -120,7 +157,7 @@ namespace CdM_Aquarium
                         f.InverserDirection();
                     }
                 }
-            }
+            }*/
 
         }
 
@@ -136,9 +173,20 @@ namespace CdM_Aquarium
             //FormesAnimees.Add(monPoisson);
             //this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
 
-            Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
+<<<<<<< HEAD
+            Bulle maBulle = new Bulle(
+                new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
+                new PointF(this.Rnd.Next(0, this.LargeurAquarium), 0));
             this.Bulles.Add(maBulle);
             this.Vue.Paint += maBulle.Paint;
+=======
+            //Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
+            Poisson monPoisson = new Poisson(e.Location, new PointF(50, e.Location.Y), 50, 50, 2500);
+            //this.Bulles.Add(maBulle);
+            this.Poissons.Add(monPoisson);
+            //this.Vue.Paint += maBulle.Paint;
+            this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
+>>>>>>> 9c474206b58f9e617957751797ea092d15bc5b4e
         }
 
         #region Bulles 

@@ -87,5 +87,9 @@
   <ItemGroup>
     <None Include="Resources\poisson.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\7019962-hd-aquarium-backgrounds-1080p.jpg" />
+    <Content Include="Resources\background_aquarium.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -20,13 +20,7 @@ namespace CdM_Aquarium
         #region Propriétés
         public Color Color { get => _color; set => _color = value; }
         public bool Explose { get => _explose; set => _explose = value; }
-        public double AngleDirection
-        {
-            get
-            {
-                return System.Math.Atan2(this.Debut.Y - this.Fin.Y, this.Debut.X - this.Debut.X);
-            }
-        }
+
         #endregion
 
         #region Constructeurs
@@ -48,6 +42,7 @@ namespace CdM_Aquarium
 
         #region Méthodes
 
+       
         public void Gonfler()
         {
             this.Largeur += 5;
@@ -56,9 +51,9 @@ namespace CdM_Aquarium
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-
-            e.Graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
-            e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
+            //e.Graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), this.BoiteDeCollision.X, this.BoiteDeCollision.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
+            //e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.Position.X, this.Position.Y, (float)this.Largeur, (float)this.Hauteur);
+            e.Graphics.FillEllipse(new SolidBrush(Color.LightBlue), this.BoiteDeCollision);
         }
         #endregion
         //public Bulle Fusionner(Bulle b)
