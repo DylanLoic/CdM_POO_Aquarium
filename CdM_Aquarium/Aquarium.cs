@@ -86,11 +86,14 @@ namespace CdM_Aquarium
             this.BullesAGonfler = new List<Bulle>();
 
             FormesAnimees = new List<FormeAnimee>();
+
+           
         }
         #endregion
 
         private void Minuterie_Tick(object sender, EventArgs e)
         {
+            // Pour chaque bulle de la liste, "b" représentant une bulle
             Bulles.ForEach(b =>
             {
                 DetecteCollision(b);
@@ -134,6 +137,11 @@ namespace CdM_Aquarium
         }
 
         #region Bulles 
+        /// <summary>
+        /// Détéction des collisions entre les bulles
+        /// </summary>
+        /// <param name="bulle1">Objet bulle à tester pour les collisions</param>
+        /// <returns>Booléen représentant si une collision est détectée</returns>
         public bool DetecteCollision(Bulle bulle1)
         {
             bool collision = false;
@@ -153,6 +161,9 @@ namespace CdM_Aquarium
             return collision;
         }
 
+        /// <summary>
+        /// Fusionne les bulles
+        /// </summary>
         private void FusionBulle()
         {
             // Retire du Paint de la vue les bulles qui vont être supprimées
@@ -165,7 +176,6 @@ namespace CdM_Aquarium
             // Gonfle les bulles de la liste
             this.BullesAGonfler.ForEach(p => p.Gonfler());
             this.BullesAGonfler.Clear();
-
         }
         #endregion
 

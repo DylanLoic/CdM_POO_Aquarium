@@ -12,13 +12,17 @@ namespace CdM_Aquarium
 {
     class Bulle : FormeAnimee
     {
-
+        #region Champs
         private Color _color;
         private bool _explose;
+        #endregion
 
+        #region Propriétés
         public Color Color { get => _color; set => _color = value; }
         public bool Explose { get => _explose; set => _explose = value; }
+        #endregion
 
+        #region Constructeurs
         public Bulle(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse)
             : base(pDebut, pFin, largeur, hauteur, vitesse)
         {
@@ -32,8 +36,10 @@ namespace CdM_Aquarium
         public Bulle()
             :this(new PointF(100,0), new PointF(100,100))
         {
-        }        
+        }
+        #endregion
 
+        #region Méthodes
         public void Gonfler() {
             this.Largeur += 10;
             this.Hauteur += 10;
@@ -44,7 +50,7 @@ namespace CdM_Aquarium
             e.Graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
             e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.Position.X, this.Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
         }
-
+        #endregion
         //public Bulle Fusionner(Bulle b)
         //{
         //    double rayonOrigine = this.Largeur / 2;

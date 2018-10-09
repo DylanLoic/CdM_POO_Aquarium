@@ -5,34 +5,46 @@
   * Description : 
   */
 
+// HitBox
+// this.BoiteDeCollision = new RectangleF(this.Position.X, this.Position.Y, (float)this.Hauteur, (float)this.Hauteur);
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace CdM_Aquarium
 {
-    
+
     class Poisson : FormeAnimee
     {
+        #region Champs
         //Taille du poisson à afficher
 
-        public Poisson() : base()
+        #endregion
+
+        #region Propriétés
+        // Alias de hauteur
+        public double Taille { get => this.Hauteur; }
+        #endregion
+
+        #region Constructeurs
+        public Poisson() :
+            base()
         {
-            
         }
 
-
-
-        public Poisson(PointF pDebut, PointF pFin) : base(pDebut, pFin)
+        public Poisson(PointF pDebut, PointF pFin) :
+            base(pDebut, pFin)
         {
-
         }
 
-        public Poisson(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse) : base(pDebut, pFin, largeur, hauteur, vitesse)
+        public Poisson(PointF pDebut, PointF pFin, double pLargeur, double pHauteur, double pVitesse) :
+            base(pDebut, pFin, pLargeur, pHauteur, pVitesse)
         {
-
         }
+        #endregion
 
+        #region Méthodes
         public override void Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), new RectangleF(Position, new SizeF(120, 60)));
@@ -41,17 +53,16 @@ namespace CdM_Aquarium
         //DrawFromImage
         private void DessinerPoissonDepuisImage(object sender, PaintEventArgs e)
         {
-
         }
 
 
         //Inverser direction avec -x
         public PointF CourbePoisson(double t)
         {
-            double x,y;
+            double x, y;
             x = (this.Hauteur * Math.Cos(t) - this.Hauteur * Math.Sin(t) * Math.Sin(t) / Math.Sqrt(2));
             y = (this.Hauteur * Math.Cos(t) * Math.Sin(t));
-            return new PointF(Position.X + Convert.ToSingle(x), Position.Y+ Convert.ToSingle(y));
+            return new PointF(Position.X + Convert.ToSingle(x), Position.Y + Convert.ToSingle(y));
         }
 
         //DrawFromFunction
@@ -62,10 +73,12 @@ namespace CdM_Aquarium
 
             double t = 0;
             double deltat = 2.0 * Math.PI / 100.0;
-            for (int i = 0; i < 99; i++) {
-               e.Graphics.DrawLine(new Pen(Color.Blue), CourbePoisson(t), CourbePoisson(t+deltat));
+            for (int i = 0; i < 99; i++)
+            {
+                e.Graphics.DrawLine(new Pen(Color.Blue), CourbePoisson(t), CourbePoisson(t + deltat));
                 t = t + deltat;
             }
         }
+        #endregion
     }
 }

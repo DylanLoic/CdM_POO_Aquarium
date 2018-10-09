@@ -20,7 +20,7 @@ namespace CdM_Aquarium
         private double _duree;
         // Variable de type "Chronomètre", permet d'effectuer des mesures de temps
         private Stopwatch _chrono;
-
+        // Variable représentant la boite de collision de l'objet animé
         private RectangleF _boiteDeCollision;
 
         #endregion
@@ -68,7 +68,7 @@ namespace CdM_Aquarium
 
         #endregion
 
-        #region Méthodes
+
         #region Constructeurs
         /// <summary>
         /// Constructeur dédié
@@ -78,18 +78,19 @@ namespace CdM_Aquarium
         /// <param name="xE">X Fin </param>
         /// <param name="yE">Y Fin </param>
         /// <param name="largeur">Taille de la forme </param>
-        /// <param name="vitesse">Vitesse </param>
+        /// <param name="vitesse">Vitesse (représentée par une durée) </param>
         public FormeAnimee(double x0, double y0, double xE, double yE, double largeur, double hauteur, double vitesse)
         {
             this.Debut = new PointF((float)x0, (float)y0);
-            this.Fin = new PointF((float)xE, (float)yE);
+            this.Fin = new PointF((float)xE, (float)yE);            
             this.Largeur = largeur;
             this.Hauteur = hauteur;
             this.Duree = vitesse;
+
             this.BoiteDeCollision = new RectangleF(this.Debut, new SizeF((float)this.Largeur, (float)this.Hauteur));
             this.Chrono = new Stopwatch();
-            this.Chrono.Start();
 
+            this.Chrono.Start();
         }
 
         public FormeAnimee(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse)
@@ -105,9 +106,12 @@ namespace CdM_Aquarium
         public FormeAnimee() : this(new PointF(100, 100), new PointF(500, 100))
         {
         }
-
         #endregion
 
+        #region Méthodes
+        /// <summary>
+        /// Inverse la direction de l'objet mouvant
+        /// </summary>
         public void InverserDirection()
         {
             PointF temp;
@@ -118,24 +122,22 @@ namespace CdM_Aquarium
         }
 
         /// <summary>
-        /// Méthodes Dessiner en abstraite
+        /// Méthodes Paint en abstraite affin de pouvoir la surchargée lors des héritages
         /// </summary>
         abstract public void Paint(object sender, PaintEventArgs e);
         #endregion
     }
 
-    class Carre : FormeAnimee
-    {
-        public Carre() : base()
-        {
-        }
+    // Exemple d'héritage de FormeAnimee et d'override de la méthode Paint
+    //class Carre : FormeAnimee
+    //{
+    //    public Carre() : base()
+    //    {
+    //    }
 
-        public override void Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawRectangle(Pens.Blue, Position.X, Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
-        }
-    }
-
-
-
+    //    public override void Paint(object sender, PaintEventArgs e)
+    //    {
+    //        e.Graphics.DrawRectangle(Pens.Blue, Position.X, Position.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
+    //    }
+    //}
 }
