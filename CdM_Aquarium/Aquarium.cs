@@ -103,12 +103,9 @@ namespace CdM_Aquarium
             this.BullesASupprimer = new List<Bulle>();
             this.BullesAGonfler = new List<Bulle>();
 
-<<<<<<< HEAD
-            FormesAnimees = new List<FormeAnimee>();
-=======
+
             this.FormesAnimees = new List<FormeAnimee>();
             this.Poissons = new List<Poisson>();
->>>>>>> 9c474206b58f9e617957751797ea092d15bc5b4e
         }
         #endregion
 
@@ -173,20 +170,18 @@ namespace CdM_Aquarium
             //FormesAnimees.Add(monPoisson);
             //this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
 
-<<<<<<< HEAD
             Bulle maBulle = new Bulle(
                 new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
                 new PointF(this.Rnd.Next(0, this.LargeurAquarium), 0));
             this.Bulles.Add(maBulle);
             this.Vue.Paint += maBulle.Paint;
-=======
+
             //Bulle maBulle = new Bulle(e.Location, new PointF(0, 0));
             Poisson monPoisson = new Poisson(e.Location, new PointF(50, e.Location.Y), 50, 50, 2500);
             //this.Bulles.Add(maBulle);
             this.Poissons.Add(monPoisson);
             //this.Vue.Paint += maBulle.Paint;
             this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
->>>>>>> 9c474206b58f9e617957751797ea092d15bc5b4e
         }
 
         #region Bulles 

@@ -39,10 +39,6 @@ namespace CdM_Aquarium
             {
                 return new RectangleF(this.Position, new SizeF((float)this.Largeur, (float)this.Hauteur));
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 9c474206b58f9e617957751797ea092d15bc5b4e
             set => _boiteDeCollision = value;
         }
 
