@@ -5,9 +5,6 @@
   * Description : 
   */
 
-// HitBox
-// this.BoiteDeCollision = new RectangleF(this.Position.X, this.Position.Y, (float)this.Hauteur, (float)this.Hauteur);
-
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,8 +15,12 @@ namespace CdM_Aquarium
     class Poisson : FormeAnimee
     {
         int _sensPoisson;
-
+        Pen _myPen;
+        private bool _change;
         public int SensPoisson { get => _sensPoisson; set => _sensPoisson = value; }
+        public Pen MyPen { get => _myPen; set => _myPen = value; }
+        public bool Change { get => _change; set => _change = value; }
+
 
         #region Constructeurs
         /*public Poisson() :
@@ -66,7 +67,7 @@ namespace CdM_Aquarium
         public PointF CourbePoisson(double t)
         {
             double x, y;
-            x = (this.Hauteur * Math.Cos(t) - this.Hauteur * Math.Sin(t) * Math.Sin(t) / Math.Sqrt(2))*this.SensPoisson;
+            x = (this.Hauteur * Math.Cos(t) - this.Hauteur * Math.Sin(t) * Math.Sin(t) / Math.Sqrt(2)) * this.SensPoisson;
             y = (this.Hauteur * Math.Cos(t) * Math.Sin(t));
             return new PointF(Position.X + Convert.ToSingle(x), Position.Y + Convert.ToSingle(y));
         }
@@ -74,16 +75,24 @@ namespace CdM_Aquarium
         //Déssine le poisson depuis une fonction paramétrique (fonction mathématique) 
         public void DessinerPoissonDepuisFonction(object sender, PaintEventArgs e)
         {
-            //Permet un dessin plus "affiné"
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-
-            double t = 0;
-            double deltat = 2.0 * Math.PI / 100.0;
-            //"Précision" à 100 lignes 0->99
-            for (int i = 0; i < 99; i++)
+            this.MyPen = new Pen(Color.FromArgb(255, 255, 69, 0), 8);
+            if (!this.Change)
             {
-                e.Graphics.DrawLine(new Pen(Color.Red), CourbePoisson(t), CourbePoisson(t + deltat));
-                t = t + deltat;
+                //Permet un dessin plus "affiné"
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                double t = 0;
+                double deltat = 2.0 * Math.PI / 100.0;
+                //"Précision" à 100 lignes 0->99
+                for (int i = 0; i < 99; i++)
+                {
+                    e.Graphics.DrawLine(MyPen, CourbePoisson(t), CourbePoisson(t + deltat));
+                    t = t + deltat;
+                }
+            }
+            else
+            {
+                e.Graphics.DrawEllipse(MyPen, (float)this.Position.X, (float)this.Position.Y, 100, 50);
             }
         }
         #endregion

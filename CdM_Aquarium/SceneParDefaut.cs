@@ -1,20 +1,15 @@
-﻿/*
- * Auteur : Dylan Schito, Kilian Perisset, Robin Brunazzi
- * Date : 02.10.2018
- * Projet : Cité des métiers
- * Description :
- */
-
-
-using CdM_Aquarium.Properties;
+﻿using CdM_Aquarium.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CdM_Aquarium
 {
-    class Aquarium
+    class SceneParDefaut
     {
         #region Constantes
         const int HAUTEUR_AQUARIUM = 600;
@@ -32,7 +27,7 @@ namespace CdM_Aquarium
         private List<Bulle> _bulles;
         private List<Bulle> _bullesASupprimer;
         private List<Bulle> _bullesAGonfler;
-
+        private bool changer = false;
 
         private List<Poisson> _poissons;
         #endregion
@@ -61,7 +56,7 @@ namespace CdM_Aquarium
         #region Méthodes
 
         #region Consctructeur
-        public Aquarium(Form vue)
+        public SceneParDefaut(Form vue)
         {
             // Récupération de la vue (FrmPrincipale)
             this.Vue = vue;
@@ -72,6 +67,7 @@ namespace CdM_Aquarium
             this.Rafraichir.Tick += Refresh_Tick;
             this.Rafraichir.Interval = 40;
             this.Rafraichir.Start();
+            this.Vue.KeyPress += Vue_KeyPress;
 
             // Initialisation du minuteur (timer)
             this.Minuterie = new Timer();
@@ -87,8 +83,6 @@ namespace CdM_Aquarium
             this.LargeurAquarium = LARGEUR_AQUARIUM;
             this.Vue.Height = HAUTEUR_AQUARIUM;
             this.Vue.Width = LARGEUR_AQUARIUM;
-            this.Vue.BackgroundImage = Resources.aquarium_background;
-            this.Vue.BackgroundImageLayout = ImageLayout.Stretch;
 
             this.Vue.Resize += Vue_Resize;
 
@@ -100,6 +94,14 @@ namespace CdM_Aquarium
             this.BullesAGonfler = new List<Bulle>();
 
             this.Poissons = new List<Poisson>();
+        }
+
+        private void Vue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '1')
+            {
+                changer = !changer;
+            }
         }
 
         private void Vue_Resize(object sender, EventArgs e)
@@ -115,7 +117,7 @@ namespace CdM_Aquarium
                     this.Vue.Paint -= p.DessinerPoissonDepuisFonction;
                 }
             });
-            poissonsASupprimer.ForEach(p=> this.Poissons.Remove(p));
+            poissonsASupprimer.ForEach(p => this.Poissons.Remove(p));
             poissonsASupprimer.Clear();
         }
         #endregion
@@ -123,26 +125,33 @@ namespace CdM_Aquarium
         private void Minuterie_Tick(object sender, EventArgs e)
         {
             // Pour chaque bulle de la liste, "b" représentant une bulle
+
+
+
+            Bulle maBulle = new Bulle(
+          new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
+          new PointF(this.Rnd.Next(0, this.LargeurAquarium), -10));
+            this.Bulles.Add(maBulle);
+
             Bulles.ForEach(b =>
             {
-                DetecteCollision(b);
+                b.Change = changer;
             });
-            FusionBulle();
 
-            for (int i = 0; i < 10; i++)
+            this.Vue.Paint += maBulle.Paint;
+
+            Bulles.ForEach(b =>
             {
-                Bulle maBulle = new Bulle(
-              new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
-              new PointF(this.Rnd.Next(0, this.LargeurAquarium), -10));
-                this.Bulles.Add(maBulle);
-                this.Vue.Paint += maBulle.Paint;
-            }
-
-            Bulles.ForEach(b => { if (b.estArrive) { this.Vue.Paint -= b.Paint; } });
+                if (b.estArrive)
+                {
+                    this.Vue.Paint -= b.Paint;
+                }
+            });
             Bulles.RemoveAll(b => b.estArrive);
 
             Poissons.ForEach(p =>
             {
+                p.Change = changer;
                 if (p.estArrive)
                 {
                     p.ChangerDeSens();
@@ -159,15 +168,17 @@ namespace CdM_Aquarium
 
         private void Vue_MouseClick(object sender, MouseEventArgs e)
         {
-            Bulle maBulle = new Bulle(
-                new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
-                new PointF(this.Rnd.Next(0, this.LargeurAquarium), 0));
-            this.Bulles.Add(maBulle);
-            this.Vue.Paint += maBulle.Paint;
+            //Bulle maBulle = new Bulle(
+            //    new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
+            //    new PointF(this.Rnd.Next(0, this.LargeurAquarium), 0));
+            //this.Bulles.Add(maBulle);
+            //this.Vue.Paint += maBulle.PaintCercle;
 
             Poisson monPoisson = new Poisson(e.Location, new PointF(50, e.Location.Y), 50, 50, 2500);
             this.Poissons.Add(monPoisson);
             this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
+
+
         }
 
         #region Bulles 
@@ -195,22 +206,7 @@ namespace CdM_Aquarium
             return collision;
         }
 
-        /// <summary>
-        /// Fusionne les bulles
-        /// </summary>
-        private void FusionBulle()
-        {
-            // Retire du Paint de la vue les bulles qui vont être supprimées
-            this.BullesASupprimer.ForEach(p => this.Vue.Paint -= p.Paint);
 
-            // Supprime les bulles de la liste principale
-            this.BullesASupprimer.ForEach(p => Bulles.Remove(p));
-            this.BullesASupprimer.Clear();
-
-            // Gonfle les bulles de la liste
-            this.BullesAGonfler.ForEach(p => p.Gonfler());
-            this.BullesAGonfler.Clear();
-        }
         #endregion
 
         #endregion

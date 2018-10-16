@@ -15,11 +15,13 @@ namespace CdM_Aquarium
         #region Champs
         private Color _color;
         private bool _explose;
+        private bool _change;
         #endregion
 
         #region Propriétés
         public Color Color { get => _color; set => _color = value; }
         public bool Explose { get => _explose; set => _explose = value; }
+        public bool Change { get => _change; set => _change = value; }
 
         #endregion
 
@@ -27,10 +29,11 @@ namespace CdM_Aquarium
         public Bulle(PointF pDebut, PointF pFin, double largeur, double hauteur, double vitesse)
             : base(pDebut, pFin, largeur, hauteur, vitesse)
         {
+            this.Change = false;
             this.Explose = false;
         }
         public Bulle(PointF pDebut, PointF pFin)
-            : base(pDebut, pFin, 10, 10, 2000)
+            : base(pDebut, pFin, 10, 10, 3000)
         {
         }
 
@@ -42,7 +45,7 @@ namespace CdM_Aquarium
 
         #region Méthodes
 
-       
+
         public void Gonfler()
         {
             this.Largeur += 5;
@@ -51,9 +54,12 @@ namespace CdM_Aquarium
 
         public override void Paint(object sender, PaintEventArgs e)
         {
-            //e.Graphics.DrawRectangle(new Pen(new SolidBrush(Color.Black)), this.BoiteDeCollision.X, this.BoiteDeCollision.Y, this.BoiteDeCollision.Width, this.BoiteDeCollision.Height);
-            //e.Graphics.DrawEllipse(new Pen(new SolidBrush(Color.Red)), this.Position.X, this.Position.Y, (float)this.Largeur, (float)this.Hauteur);
-            e.Graphics.FillEllipse(new SolidBrush(Color.LightBlue), this.BoiteDeCollision);
+            Pen myPen = new Pen(Color.Red, 4);
+
+            if (!this.Change)
+                e.Graphics.FillEllipse(new SolidBrush(Color.LightBlue), this.BoiteDeCollision);
+            else
+                e.Graphics.DrawEllipse(myPen, this.BoiteDeCollision);
         }
         #endregion
         //public Bulle Fusionner(Bulle b)
