@@ -17,3 +17,4 @@ C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aq
 C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csproj.CoreCompileInputs.cache
 C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.exe
 C:\Users\Administrateur\Documents\CdM_POO_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.pdb
+C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csprojAssemblyReference.cache

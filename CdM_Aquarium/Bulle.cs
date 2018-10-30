@@ -13,14 +13,16 @@ namespace CdM_Aquarium
     class Bulle : FormeAnimee
     {
         #region Champs
+        // Variable permettant d'acceder à la couleur de la bulle
         private Color _color;
+        // Variable permettant de changer l'état de la bulle.
         private bool _explose;
         private bool _change;
         #endregion
 
         #region Propriétés
         public Color Color { get => _color; set => _color = value; }
-        public bool Explose { get => _explose; set => _explose = value; }
+        public bool Explose { get => _explose; private set => _explose = value; }
         public bool Change { get => _change; set => _change = value; }
 
         #endregion
@@ -48,8 +50,7 @@ namespace CdM_Aquarium
 
         public void Gonfler()
         {
-            this.Largeur += 5;
-            this.Hauteur += 5;
+            this.GrandirForme(5,5);
         }
 
         public override void Paint(object sender, PaintEventArgs e)

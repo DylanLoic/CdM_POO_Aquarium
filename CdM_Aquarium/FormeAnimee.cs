@@ -7,32 +7,36 @@ namespace CdM_Aquarium
 {
     abstract class FormeAnimee
     {
-        #region
-        // Déclaration des variables
+        #region Variables d'instance
         // Variable de type Point, contient une position X et une position Y
+        // Variable d'instance permentant d'avoir la position de début de la forme animée
         private PointF _debut;
+        // Variable de type Point, contient une position X et une position Y
+        // Variable d'instance permentant d'avoir la position de fin de la forme animée
         private PointF _fin;
         // Variable de type Entier, contient un chiffre positif sans virgule
+        // Variable permettant d'avoir la largeur de la forme animée
         private double _largeur;
         // Variable de type Entier, contient un chiffre positif sans virgule
+        // Variable permettant d'avoir la hauteur de la forme animée
         private double _hauteur;
         // Variable de type Double, contient un chiffre positif avec virgule
+        // Variable permettant d'avoir la durée du déplacement entre le point de début et le point de fin
         private double _duree;
         // Variable de type "Chronomètre", permet d'effectuer des mesures de temps
         private Stopwatch _chrono;
-        // Variable représentant la boite de collision de l'objet animé
+        // Variable Rectangle englobant la forme animée
         private RectangleF _boiteDeCollision;
 
         #endregion
 
         #region Propriétés
-
-        public PointF Debut { get => _debut; set => _debut = value; }
-        public PointF Fin { get => _fin; set => _fin = value; }
-        public double Largeur { get => _largeur; set => _largeur = value; }
-        public double Hauteur { get => _hauteur; set => _hauteur = value; }
-        public double Duree { get => _duree; set => _duree = value; }
-        public Stopwatch Chrono { get => _chrono; set => _chrono = value; }
+        public PointF Debut { get => _debut; private set => _debut = value; }
+        public PointF Fin { get => _fin; private set => _fin = value; }
+        public double Largeur { get => _largeur; private set => _largeur = value; }
+        public double Hauteur { get => _hauteur; private set => _hauteur = value; }
+        public double Duree { get => _duree; private set => _duree = value; }
+        public Stopwatch Chrono { get => _chrono; private set => _chrono = value; }
         public RectangleF BoiteDeCollision
         {
             get
@@ -75,7 +79,6 @@ namespace CdM_Aquarium
 
         #endregion
 
-
         #region Constructeurs
         /// <summary>
         /// Constructeur dédié
@@ -117,7 +120,7 @@ namespace CdM_Aquarium
 
         #region Méthodes
         /// <summary>
-        /// Inverse la direction de l'objet mouvant
+        /// Inverse la direction de l'objet se déplacant
         /// </summary>
         public void InverserDirection()
         {
@@ -129,7 +132,18 @@ namespace CdM_Aquarium
         }
 
         /// <summary>
-        /// Méthodes Paint en abstraite affin de pouvoir la surchargée lors des héritages
+        /// Permet de faire grandir la forme animée.
+        /// </summary>
+        /// <param name="pLargeur">Ajoute la valeur à la largeur de l'objet</param>
+        /// <param name="pHauteur">Ajoute la valeur à la hauteur de l'objet</param>
+        public void GrandirForme(double pLargeur, double pHauteur)
+        {
+            this.Largeur += pLargeur;
+            this.Hauteur += pHauteur;
+        }
+
+        /// <summary>
+        /// Méthodes Paint en abstraite affin de pouvoir la surchargée lors des différents héritages
         /// </summary>
         abstract public void Paint(object sender, PaintEventArgs e);
         #endregion
