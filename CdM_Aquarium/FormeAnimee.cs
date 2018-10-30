@@ -9,7 +9,7 @@ namespace CdM_Aquarium
     {
         #region
         // Déclaration des variables
-        // Variable de type Point, contient une position X et une position Y
+        // Point de début d'un objet contient une position
         private PointF _debut;
         private PointF _fin;
         // Variable de type Entier, contient un chiffre positif sans virgule

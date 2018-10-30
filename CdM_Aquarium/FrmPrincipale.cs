@@ -23,8 +23,8 @@ namespace CdM_Aquarium
         public frmPrincipale()
         {
             DoubleBuffered = true;
-            //Aquarium aquarium = new Aquarium(this);
-            SceneParDefaut scene1 = new SceneParDefaut(this);
+            Aquarium aquarium = new Aquarium(this);
+            //SceneParDefaut scene1 = new SceneParDefaut(this);
 
         }
     }
