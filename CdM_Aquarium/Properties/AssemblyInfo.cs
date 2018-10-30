@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("CdM_Aquarium")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Aquarium")]
+[assembly: AssemblyDescription("Présentation de la programmation orienté objet avec différents scénarios avec des poissons et des bulles.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CFPT-I Technicien ES 2ème année")]
 [assembly: AssemblyProduct("CdM_Aquarium")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

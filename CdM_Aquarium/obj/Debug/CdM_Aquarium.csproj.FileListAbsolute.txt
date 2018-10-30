@@ -1,4 +1,3 @@
-C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csprojAssemblyReference.cache
 C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.frmPrincipale.resources
 C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.Properties.Resources.resources
 C:\Users\Administrateur\source\repos\CdM_Aquarium\CdM_Aquarium\obj\Debug\CdM_Aquarium.csproj.GenerateResource.cache

@@ -121,6 +121,9 @@
   <data name="aquarium_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\7019962-hd-aquarium-backgrounds-1080p.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_poisson" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_poisson.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="poisson" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\poisson.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

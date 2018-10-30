@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>poisson.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -89,9 +92,12 @@
     <None Include="Resources\poisson.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="poisson.ico" />
     <Content Include="Resources\7019962-hd-aquarium-backgrounds-1080p.jpg" />
+    <None Include="Resources\aquarium-fish-drawing-1.ico" />
     <Content Include="Resources\background_aquarium.jpg" />
-    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources\icon_poisson.ico" />
+    <Content Include="Resources\poisson_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

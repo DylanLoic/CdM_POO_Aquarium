@@ -22,6 +22,7 @@ namespace CdM_Aquarium
     {
         public frmPrincipale()
         {
+            this.Icon = Properties.Resources.icon_poisson;
             DoubleBuffered = true;
             //Aquarium aquarium = new Aquarium(this);
             SceneParDefaut scene1 = new SceneParDefaut(this);
