@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+  * Auteurs : Schito Dylan, Périsset Kilian, Brunazzi Robin
+  * Date : 18.09.2018
+  * Projet : Cité des métiers
+  * Description : 
+  */
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +20,12 @@ namespace CdM_Aquarium
 {
     public partial class frmPrincipale : Form
     {
-        PaintEventArgs e;
         public frmPrincipale()
         {
             DoubleBuffered = true;
-            Aquarium aquarium = new Aquarium(this);
+            //Aquarium aquarium = new Aquarium(this);
+            SceneParDefaut scene1 = new SceneParDefaut(this);
+
         }
     }
 }

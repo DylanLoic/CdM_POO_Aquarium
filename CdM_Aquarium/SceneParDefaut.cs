@@ -1,4 +1,11 @@
-﻿using CdM_Aquarium.Properties;
+﻿/*
+  * Auteurs : Brunazzi Robin
+  * Date : 18.09.2018
+  * Projet : Cité des métiers
+  * Description : 
+  */
+
+using CdM_Aquarium.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,6 +24,8 @@ namespace CdM_Aquarium
         #endregion
 
         #region Champs
+        private bool changer = true;
+
         private Form _vue;
         private Timer _minuterie;
         private Timer _rafraichir;
@@ -27,8 +36,6 @@ namespace CdM_Aquarium
         private List<Bulle> _bulles;
         private List<Bulle> _bullesASupprimer;
         private List<Bulle> _bullesAGonfler;
-        private bool changer = false;
-
         private List<Poisson> _poissons;
         #endregion
 
@@ -92,7 +99,6 @@ namespace CdM_Aquarium
             this.Bulles = new List<Bulle>();
             this.BullesASupprimer = new List<Bulle>();
             this.BullesAGonfler = new List<Bulle>();
-
             this.Poissons = new List<Poisson>();
         }
 
@@ -125,8 +131,6 @@ namespace CdM_Aquarium
         private void Minuterie_Tick(object sender, EventArgs e)
         {
             // Pour chaque bulle de la liste, "b" représentant une bulle
-
-
 
             Bulle maBulle = new Bulle(
           new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
@@ -162,23 +166,14 @@ namespace CdM_Aquarium
 
         private void Refresh_Tick(object sender, EventArgs e)
         {
-            // Vue..Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             this.Vue.Invalidate();
         }
 
         private void Vue_MouseClick(object sender, MouseEventArgs e)
         {
-            //Bulle maBulle = new Bulle(
-            //    new PointF(this.Rnd.Next(0, this.LargeurAquarium), this.Rnd.Next(this.HauteurAquarium - 100, this.HauteurAquarium)),
-            //    new PointF(this.Rnd.Next(0, this.LargeurAquarium), 0));
-            //this.Bulles.Add(maBulle);
-            //this.Vue.Paint += maBulle.PaintCercle;
-
             Poisson monPoisson = new Poisson(e.Location, new PointF(50, e.Location.Y), 50, 50, 2500);
             this.Poissons.Add(monPoisson);
             this.Vue.Paint += monPoisson.DessinerPoissonDepuisFonction;
-
-
         }
 
         #region Bulles 
@@ -205,10 +200,7 @@ namespace CdM_Aquarium
             });
             return collision;
         }
-
-
         #endregion
-
         #endregion
     }
 }
