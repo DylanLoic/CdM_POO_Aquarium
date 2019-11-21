@@ -15,5 +15,3 @@ Nous recommandons toutefois l'utilisation de l'anglais en tout temps (dans le ca
 
 - Dylan SCHITO
 - Robin BRUNAZZI
-- Kilian PERISSET
-
